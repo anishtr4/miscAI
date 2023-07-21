@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react';
 
 import { Menu } from "lucide-react"
@@ -16,13 +16,15 @@ const MobileSidebar = () => {
 
     return (
         <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
+
                 <Button variant="ghost" size="icon" className="md:hidden">
                     <Menu />
 
                 </Button>
+
             </SheetTrigger>
-            <SheetContent side='left' className="p-0">
+            <SheetContent side='left' className="p-0"> 
                 <Sidebar />
             </SheetContent>
         </Sheet>
