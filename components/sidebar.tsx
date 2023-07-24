@@ -36,7 +36,7 @@ const routes = [{
     label: 'Generate Music',
     icon: MusicIcon,
     href: '/music',
-    color: 'text-emarald-700'
+    color: 'text-emerald-700'
 },
 {
     label: 'Generate Code',
