@@ -8,6 +8,14 @@ import Link from "next/link";
 const montserrat = Montserrat({ weight: '600', subsets: ['latin'] })
 import {usePathname} from "next/navigation"
 
+
+
+import { UserApiLimit } from "@prisma/client";
+
+
+import { FreeCounter } from "@/components/free-counter";
+import { number } from "zod";
+
 const routes = [{
     label: 'Dashboard',
     icon: LayoutDashboard,
@@ -48,7 +56,12 @@ const routes = [{
     icon: SettingsIcon,
     href: '/settings'
 }]
-const Sidebar = () => {
+
+
+interface SideBarProps {
+    apiLimitCount:number
+}
+const Sidebar = ({apiLimitCount}:SideBarProps) => {
 
     const pathname = usePathname();
     return (
@@ -77,8 +90,12 @@ const Sidebar = () => {
                             </div>
                         </Link>
                     ))}
+               
                 </div>
+                 
             </div>
+
+            <FreeCounter apiLimitCount={apiLimitCount}/>
         </div>
     )
 }
