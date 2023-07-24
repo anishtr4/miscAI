@@ -20,6 +20,9 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
+
+
+
 const ConversationPage = () => {
     const router = useRouter();
 
