@@ -21,8 +21,11 @@ import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { useProModal } from "@/hooks/use-pro-modal";
 const CodePage = () => {
+    const proModal = useProModal();
     const router = useRouter();
+
 
     const [message, setMessages] = useState<ChatCompletionRequestMessage[]>([])
 
@@ -56,8 +59,9 @@ const CodePage = () => {
             setMessages((current) => [...current, userMessage, response.data])
             form.reset();
         } catch (error: any) {
-            // TODO pro feature
-            console.log(error)
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         }
         finally {
             router.refresh();
@@ -123,10 +127,10 @@ const CodePage = () => {
                                             </div>
                                         ),
                                         code: ({ node, ...props }) => (
-                                            <code className="bg-black/10 rounded-lg p-1" {...props}/>
+                                            <code className="bg-black/10 rounded-lg p-1" {...props} />
 
                                         )
-                                     
+
                                     }}
                                     className="text-sm overflow-hidden leading-7">
                                     {message.content || ""}

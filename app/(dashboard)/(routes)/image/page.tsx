@@ -21,8 +21,10 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { useProModal } from "@/hooks/use-pro-modal";
 // import { Select, SelectContent, SelectItem } from "@radix-ui/react-select";
 const ImagePage = () => {
+    const proModal = useProModal();
     const router = useRouter();
 
     // const [message, setMessages] = useState<ChatCompletionRequestMessage[]>([])
@@ -53,8 +55,9 @@ const ImagePage = () => {
             // setMessages((current) => [...current, userMessage, response.data])
             form.reset();
         } catch (error: any) {
-            // TODO pro feature
-            console.log(error)
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         }
         finally {
             router.refresh();
@@ -184,7 +187,7 @@ const ImagePage = () => {
                         <Empty label='No Images' />
                     }
                     <div className="grid grid-col- md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
-               
+
 
                         {images.map((src) => (
                             <Card

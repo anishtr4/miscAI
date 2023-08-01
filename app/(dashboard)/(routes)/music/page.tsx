@@ -17,7 +17,10 @@ import { ChatCompletionRequestMessage, ChatCompletionRequestMessageRoleEnum } fr
 import { currentUser } from "@clerk/nextjs/dist/types/server-helpers.server";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
+import { useProModal } from "@/hooks/use-pro-modal";
 const MusicPage = () => {
+    const proModal = useProModal();
+
     const router = useRouter();
 
     // const [message, setMessages] = useState<ChatCompletionRequestMessage[]>([])
@@ -44,8 +47,9 @@ const MusicPage = () => {
             setMusic(response.data.audio)
             form.reset();
         } catch (error: any) {
-            // TODO pro feature
-            console.log(error)
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         }
         finally {
             router.refresh();
@@ -97,14 +101,14 @@ const MusicPage = () => {
                     }
 
                     {music && (
-                        <audio 
-                        controls
-                        className="w-full mt-8"
-                        src={music}>
+                        <audio
+                            controls
+                            className="w-full mt-8"
+                            src={music}>
 
                         </audio>
                     )}
-             
+
 
                     {/* <div className="flex flex-col-reverse gap-y-4">
                         {message.map((message) => (
